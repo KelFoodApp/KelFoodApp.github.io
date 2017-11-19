@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <style>
+      img {
+            border-radius: 50%;
+          }
+    </style>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Freelancer - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+
+    <!--link to firebase-->
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script src="js/firebase.js"></script>
+
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">WELCOME</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#portfolio">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="about.html">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead">
+      <div class="container">
+        <img class="img-fluid" src="img/food.jpg" alt="Avatar" style="width:200px">
+        <div class="intro-text">
+          <span class="name"><H3><font color="black">kELANTANESE FOOD</font></H3></span>
+          <hr class="star-light">
+          <!--<span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>-->
+        </div>
+          <form name="frm">
+              <input type ="text" name="g"  placeholder="Search..." maxlength="50">
+              <input type="button" value="Go!"  onclick ="filter()">
+        </form>
+      </div>
+    </header>
+
+
+    <script type="text/javascript">
+         //document.getElementById("frm").reset();
+
+
+      //search function(passing pameter)
+       var type;
+       function filter()
+       {
+                  //window.location.reload(true);
+                   
+                   type = document.frm.g.value;
+                   alert(type);
+                  
+                   var rootRef = firebase.database().ref(type); 
+                   rootRef.on('value', gotData);
+                                     
+                  // window.location.reload(true);
+            
+                    // Reload page 5 seconds after form submission
+                    
+                    
+                  // window.location.reload();
+              
+        }
+
+        //insert data in Array
+        function gotData(snap)
+       {
+    
+                var val = snap.val();
+                var key = Object.keys(val);
+                //var storage    = firebase.storage();
+                //var storageRef = storage.ref();
+                //console.log(val);
+
+            for(var i=0;i<key.length;i++)
+            {
+
+                var k = key[i];
+                var name = val[k].NAME;
+                var price = parseFloat(val[k].PRICE);
+                var rate = parseFloat(val[k].RATE);
+                var img = val[k].image;
+
+             
+                //console.log(name);
+
+                //var id=[];
+                for (var i=0;i<key.length;i++) 
+                {
+                    var k = key[i];
+                    for (var j = i + 1; j < key.length; j++) 
+                    {
+                        var k2 = key[j];
+                        var temp;
+                        if (val[k].RATE < val[k2].RATE) 
+                        {
+                            temp = val[k].RATE;
+                            val[k].RATE = val[k2].RATE;
+                            val[k2].RATE = temp;
+
+                            temp = val[k].PRICE;
+                            val[k].PRICE = val[k2].PRICE;
+                            val[k2].PRICE = temp;
+
+                            temp = val[k].NAME;
+                            val[k].NAME = val[k2].NAME;
+                            val[k2].NAME= temp;
+
+                            temp = val[k].image;
+                            val[k].image = val[k2].image;
+                            val[k2].image = temp;
+
+                        }
+                    }
+                }
+
+                //console.log("Descending Order:");
+                for (var i = 0; i < key.length; i++) 
+                {
+
+                  //$("#display").append().remove();
+                    var l = key[i];
+
+                     $("#display").append('<table>' + '<tr>' + '<td rowspan="3">'+ 
+                    '<img src='+ val[l].image + 'height="120px" width="190px"/> ' + '<td>' +'Name: '+ val[l].NAME + '</td>' +'</tr>' + '<tr>' + '<td>' + 'Price: RM ' + val[l].PRICE +'</td>' + '</tr>' + '<tr>' + '<td>' + 'Rate: '+ val[l].RATE +'</td>' + '</tr>' + '</table>'+ '<hr color="#800000">');
+
+                    // window.location.reload(); #A9A9A9
+                }
+
+            }
+        }
+
+
+  </script>
+<!--<script type="text/javascript">
+  var x = getElementById('#display');
+  x.remove();
+</script>-->
+
+
+<form id="myform">
+  <table id="h">
+      <tr>
+        <td><p id="display"></p></td>
+      </tr>
+  </table>
+</form>
+
+  
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/freelancer.min.js"></script>
+
+  </body>
+
+</html>
