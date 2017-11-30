@@ -4,9 +4,14 @@
   <head>
 
     <style>
-      img {
+      /*img {
             border-radius: 50%;
           }
+
+
+          body {margin:0;}  ;*/
+
+
     </style>
 
     <meta charset="utf-8">
@@ -14,7 +19,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Freelancer - Start Bootstrap Theme</title>
+    <title>Start Bootstrap Theme</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -34,7 +39,9 @@
 
   </head>
 
-  <body id="page-top">
+  <body id="page-top" >
+
+
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -62,41 +69,46 @@
       <div class="container">
         <img class="img-fluid" src="img/food.jpg" alt="Avatar" style="width:200px">
         <div class="intro-text">
-          <span class="name"><H3><font color="black">kELANTANESE FOOD</font></H3></span>
+          <span class="name"><H3><font color="black">KELANTANESE FOOD</font></H3></span>
           <hr class="star-light">
           <!--<span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>-->
         </div>
-          <form name="frm">
+          <form name="frm" action="">
               <input type ="text" name="g"  placeholder="Search..." maxlength="50">
               <input type="button" value="Go!"  onclick ="filter()">
         </form>
-      </div>
+
+      
+     
     </header>
 
 
     <script type="text/javascript">
-         //document.getElementById("frm").reset();
-
+        
 
       //search function(passing pameter)
+       
        var type;
        function filter()
        {
-                  //window.location.reload(true);
+                  
                    
                    type = document.frm.g.value;
                    alert(type);
                   
                    var rootRef = firebase.database().ref(type); 
+
+                   /*if(rootRef)
+                   {
+                     rootRef.on('value', gotData);
+                   }
+
+                   else{
+                    alert("not found");}*/
+
+
                    rootRef.on('value', gotData);
                                      
-                  // window.location.reload(true);
-            
-                    // Reload page 5 seconds after form submission
-                    
-                    
-                  // window.location.reload();
-              
         }
 
         //insert data in Array
@@ -105,23 +117,26 @@
     
                 var val = snap.val();
                 var key = Object.keys(val);
-                //var storage    = firebase.storage();
-                //var storageRef = storage.ref();
-                //console.log(val);
+                var u = val.url;
+               // console.log(url);
+                //window.location.replace(url);
 
-            for(var i=0;i<key.length;i++)
+                location.href = u;
+                 //window.location.assign("u")
+              //window.location = u;
+
+          //document.getElementById("display").innerHTML="<object type='text/html' data="+ u +" width='1000' height='800'>";
+
+          //document.getElementById("display").innerHTML="<object type='text/html' data="+ (window.location = u) +" width='1000' height='800'>";
+
+
+
+      
+
+                
+          /*  for(var i=0;i<key.length;i++)
             {
 
-                var k = key[i];
-                var name = val[k].NAME;
-                var price = parseFloat(val[k].PRICE);
-                var rate = parseFloat(val[k].RATE);
-                var img = val[k].image;
-
-             
-                //console.log(name);
-
-                //var id=[];
                 for (var i=0;i<key.length;i++) 
                 {
                     var k = key[i];
@@ -154,38 +169,22 @@
                 //console.log("Descending Order:");
                 for (var i = 0; i < key.length; i++) 
                 {
-
-                  //$("#display").append().remove();
                     var l = key[i];
 
                      $("#display").append('<table>' + '<tr>' + '<td rowspan="3">'+ 
-                    '<img src='+ val[l].image + 'height="120px" width="190px"/> ' + '<td>' +'Name: '+ val[l].NAME + '</td>' +'</tr>' + '<tr>' + '<td>' + 'Price: RM ' + val[l].PRICE +'</td>' + '</tr>' + '<tr>' + '<td>' + 'Rate: '+ val[l].RATE +'</td>' + '</tr>' + '</table>'+ '<hr color="#800000">');
-
-                    // window.location.reload(); #A9A9A9
+                    '<img src='+ val[l].image + 'height="120px" width="190px"/> ' + '<td>' +'Name: '+ val[l].NAME + '</td>' +'</tr>' + '<tr>' + '<td>' + 'Price: RM ' + val[l].PRICE +'</td>' + '</tr>' + '<tr>' + '<td>' + 'Rate: '+ val[l].RATE +'</td>' +'</tr>' + '</table>'+ '<hr color="#800000">');
                 }
 
-            }
+            }*/
         }
 
 
+
   </script>
-<!--<script type="text/javascript">
-  var x = getElementById('#display');
-  x.remove();
-</script>-->
 
+<p id="display"></p> </div>
 
-<form id="myform">
-  <table id="h">
-      <tr>
-        <td><p id="display"></p></td>
-      </tr>
-  </table>
-</form>
-
-  
-
-    <!-- Bootstrap core JavaScript -->
+      <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
